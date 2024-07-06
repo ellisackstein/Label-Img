@@ -1685,7 +1685,7 @@ def read(filename, default=None):
 def get_main_app(argv=None):
     """
     Standard boilerplate Qt application code.
-    Do everything but app.exec_() -- so that we can test the application in one thread
+    Do everything but app.exec_() -- so that we can test1 the application in one thread
     """
     if not argv:
         argv = []

@@ -12,13 +12,13 @@ class TestPascalVocRW(unittest.TestCase):
         from pascal_voc_io import PascalVocReader
 
         # Test Write/Read
-        writer = PascalVocWriter('tests', 'test', (512, 512, 1), local_img_path='tests/test.512.512.bmp')
+        writer = PascalVocWriter('tests', 'test1', (512, 512, 1), local_img_path='tests/test1.512.512.bmp')
         difficult = 1
         writer.add_bnd_box(60, 40, 430, 504, 'person', difficult)
         writer.add_bnd_box(113, 40, 450, 403, 'face', difficult)
-        writer.save('tests/test.xml')
+        writer.save('tests/test1.xml')
 
-        reader = PascalVocReader('tests/test.xml')
+        reader = PascalVocReader('tests/test1.xml')
         shapes = reader.get_shapes()
 
         person_bnd_box = shapes[0]
@@ -48,8 +48,8 @@ class TestCreateMLRW(unittest.TestCase):
         shapes = [person, face]
         output_file = dir_name + "/tests.json"
 
-        writer = CreateMLWriter('tests', 'test.512.512.bmp', (512, 512, 1), shapes, output_file,
-                                local_img_path='tests/test.512.512.bmp')
+        writer = CreateMLWriter('tests', 'test1.512.512.bmp', (512, 512, 1), shapes, output_file,
+                                local_img_path='tests/test1.512.512.bmp')
         
         writer.verified = True
         writer.write()
@@ -61,7 +61,7 @@ class TestCreateMLRW(unittest.TestCase):
         import json
         data_dict = json.loads(input_data)[0]
         self.assertEqual(True, data_dict['verified'], 'verified tag not reflected')
-        self.assertEqual('test.512.512.bmp', data_dict['image'], 'filename not correct in .json')
+        self.assertEqual('test1.512.512.bmp', data_dict['image'], 'filename not correct in .json')
         self.assertEqual(2, len(data_dict['annotations']), 'output file contains to less annotations')
         face = data_dict['annotations'][1]
         self.assertEqual('face', face['label'], 'label name is wrong')
@@ -78,7 +78,7 @@ class TestCreateMLRW(unittest.TestCase):
         from create_ml_io import CreateMLReader
 
         output_file = dir_name + "/tests.json"
-        reader = CreateMLReader(output_file, 'tests/test.512.512.bmp')
+        reader = CreateMLReader(output_file, 'tests/test1.512.512.bmp')
         shapes = reader.get_shapes()
         face = shapes[1]
 
